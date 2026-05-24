@@ -27,5 +27,5 @@ Blockly.Blocks[blockName] = {
 
 javascriptGenerator.forBlock[blockName] = (block) => {
   const tof = javascriptGenerator.valueToCode(block, 'TOF', javascriptGenerator.ORDER_ATOMIC);
-  return `await i.deferReply({ ephemeral: ${tof === null ? false : tof} });`;
+  return `await i.deferReply(${tof?'{ flags: Discord.MessageFlags.Ephemeral }':''});`;
 };

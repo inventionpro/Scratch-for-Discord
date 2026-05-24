@@ -84,8 +84,7 @@ const BORDER_MUTATOR_MIXIN = {
   }
 };
 
-Blockly.Extensions.registerMutator('s4d_message_menu_block_mutator', BORDER_MUTATOR_MIXIN, null, ['']);
-
+Blockly.Extensions.registerMutator('s4d_message_menu_block_mutator', BORDER_MUTATOR_MIXIN, null, []);
 javascriptGenerator.forBlock['s4d_message_menu_block'] = (block) => {
   let id = javascriptGenerator.valueToCode(block, 'CUSTOM_ID2', javascriptGenerator.ORDER_ATOMIC) || null;
   let emoji = javascriptGenerator.valueToCode(block, 'EMOJI2', javascriptGenerator.ORDER_ATOMIC) || null;

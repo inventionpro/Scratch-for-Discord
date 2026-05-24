@@ -45,13 +45,13 @@ javascriptGenerator.forBlock[blockName] = (block) => {
     const contentType = block.getInput('CONTENT').connection.targetConnection.getSourceBlock().outputConnection.check?.[0] || null;
     if (Types.MessagePayload.includes(contentType))
       return `await interaction.reply({
-  ephemeral: ${boolean},
+  ${boolean?'flags: Discord.MessageFlags.Ephemeral,':''}
   components: [${button2}],
   ...${content}
 });`;
   }
   return `await interaction.reply({
-  ephemeral: ${boolean},
+  ${boolean?'flags: Discord.MessageFlags.Ephemeral,':''}
   content: ${content},
   components: [${button2}]
 });`;

@@ -29,7 +29,7 @@ javascriptGenerator.forBlock[blockName] = () => {
                 gameOverTitle: 'Game Over'
             });
             snakeGame.newGame(interaction);),
-ephemeral: true,
+flags: Discord.MessageFlags.Ephemeral,
 components: []
 })`;
 };

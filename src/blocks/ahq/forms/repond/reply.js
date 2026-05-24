@@ -93,7 +93,7 @@ const BORDER_MUTATOR_MIXIN = {
   }
 };
 
-Blockly.Extensions.registerMutator('s4d_ahq_mutator_t', BORDER_MUTATOR_MIXIN, null, ['']);
+Blockly.Extensions.registerMutator('s4d_ahq_mutator_t', BORDER_MUTATOR_MIXIN, null, []);
 javascriptGenerator.forBlock[blockName] = (block) => {
   let code = [`await i.reply({`];
   const Id = javascriptGenerator.valueToCode(block, 'CONTENT', javascriptGenerator.ORDER_NONE);
@@ -102,9 +102,12 @@ javascriptGenerator.forBlock[blockName] = (block) => {
   if (Id) code.push(`content: String(${Id}),`);
   if (Lavbel) code.push(`embeds: [${Lavbel.replace("'", '').replace("'", '')}],`);
   if (Style) code.push(`components: [new Discord.ActionRowBuilder().addComponents(${Style.replace("'", '').replace("'", '').replace('(', '').replace(')', '')})],`);
-  code.push(`ephemeral: ${javascriptGenerator.valueToCode(block, 'ephemeral', javascriptGenerator.ORDER_NONE)}\n})`);
+  let ephemeral = javascriptGenerator.valueToCode(block, 'ephemeral', javascriptGenerator.ORDER_NONE);
+  if (ephemeral) code.push('flags: Discord.MessageFlags.Ephemeral');
+  code.push('})')
   return code.join('\n');
 };
+
 registerRestrictions(blockName, [
   {
     type: 'notempty',

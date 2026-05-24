@@ -108,7 +108,7 @@ const BORDER_MUTATOR_MIXIN = {
   }
 };
 
-Blockly.Extensions.registerMutator('ahq_send_mutator', BORDER_MUTATOR_MIXIN, null, ['']);
+Blockly.Extensions.registerMutator('ahq_send_mutator', BORDER_MUTATOR_MIXIN, null, []);
 javascriptGenerator.forBlock[blockName] = (block) => {
   const a = javascriptGenerator.valueToCode(block, 'AHQ_E', javascriptGenerator.ORDER_NONE);
   const b = javascriptGenerator.valueToCode(block, 'AHQ_B', javascriptGenerator.ORDER_NONE);

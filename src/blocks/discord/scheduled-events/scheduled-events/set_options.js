@@ -83,8 +83,7 @@ const BORDER_MUTATOR_MIXIN = {
   }
 };
 
-Blockly.Extensions.registerMutator('event_set_options_mutator', BORDER_MUTATOR_MIXIN, null, ['']);
-
+Blockly.Extensions.registerMutator('event_set_options_mutator', BORDER_MUTATOR_MIXIN, null, []);
 javascriptGenerator.forBlock['event_set_options'] = (block) => {
   let name = '';
   let start_date = '';

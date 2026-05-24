@@ -85,7 +85,7 @@ const BORDER_MUTATOR_MIXIN = {
   }
 };
 
-Blockly.Extensions.registerMutator('dash_setup', BORDER_MUTATOR_MIXIN, null, ['']);
+Blockly.Extensions.registerMutator('dash_setup', BORDER_MUTATOR_MIXIN, null, []);
 javascriptGenerator.forBlock[blockName] = (block) => {
   let extra = [];
   if (javascriptGenerator.valueToCode(block, 'P_D_PERMS', javascriptGenerator.ORDER_NONE)) extra.push(`,\npermissions: ${javascriptGenerator.valueToCode(block, 'P_D_PERMS', javascriptGenerator.ORDER_NONE)}`);

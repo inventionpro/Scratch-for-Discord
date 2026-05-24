@@ -70,7 +70,7 @@ javascriptGenerator.forBlock[blockName] = (block) => {
   let msg = javascriptGenerator.valueToCode(block, 'MESSAGE', javascriptGenerator.ORDER_ATOMIC);
   let rowMSG = '';
   let hidden2 = `
-    ephemeral: ${hidden},`;
+    ${hidden?'flags: Discord.MessageFlags.Ephemeral,':''}`;
   if (String(type) == 'interaction.editReply' || (hidden !== '' && !hidden)) hidden2 = '';
   let stored = `[${fileNameandLocation}]`;
   if (fileNameandLocation.includes("['") || fileNameandLocation.includes('["')) stored = fileNameandLocation;

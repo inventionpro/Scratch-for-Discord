@@ -83,7 +83,7 @@ const BORDER_MUTATOR_MIXIN = {
   }
 };
 
-Blockly.Extensions.registerMutator('s4d_message_embed_mutator_lime', BORDER_MUTATOR_MIXIN, null, ['']);
+Blockly.Extensions.registerMutator('s4d_message_embed_mutator_lime', BORDER_MUTATOR_MIXIN, null, []);
 
 javascriptGenerator.forBlock['s4d_message_embed_lime'] = (block) => {
   let title = '';

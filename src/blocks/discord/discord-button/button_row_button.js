@@ -84,8 +84,7 @@ const BORDER_MUTATOR_MIXIN = {
   }
 };
 
-Blockly.Extensions.registerMutator('s4d_message_row_block_mutator', BORDER_MUTATOR_MIXIN, null, ['']);
-
+Blockly.Extensions.registerMutator('s4d_message_row_block_mutator', BORDER_MUTATOR_MIXIN, null, []);
 javascriptGenerator.forBlock['s4d_message_row_block'] = (block) => {
   let id = javascriptGenerator.valueToCode(block, 'CUSTOM_ID', javascriptGenerator.ORDER_ATOMIC) || null;
   let url = javascriptGenerator.valueToCode(block, 'URL', javascriptGenerator.ORDER_ATOMIC) || null;

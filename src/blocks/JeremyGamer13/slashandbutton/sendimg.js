@@ -39,7 +39,7 @@ javascriptGenerator.forBlock[blockName] = (block) => {
   if (fileNameandLocation.includes("['") || fileNameandLocation.includes('["')) stored = fileNameandLocation;
   return `interaction.reply({
   files: ${stored},
-  ephemeral: ${hidden}
+  ${hidden?'flags: Discord.MessageFlags.Ephemeral':''}
 });`;
 };
 

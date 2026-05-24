@@ -86,7 +86,7 @@ const BORDER_MUTATOR_MIXIN = {
   }
 };
 
-Blockly.Extensions.registerMutator('s4d_ahq_mutator', BORDER_MUTATOR_MIXIN, null, ['']);
+Blockly.Extensions.registerMutator('s4d_ahq_mutator', BORDER_MUTATOR_MIXIN, null, []);
 javascriptGenerator.forBlock[blockName] = (block) => {
   let code = '';
   const Id = javascriptGenerator.valueToCode(block, 'ID_A', javascriptGenerator.ORDER_ATOMIC);
