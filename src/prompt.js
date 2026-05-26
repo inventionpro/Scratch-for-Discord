@@ -1,29 +1,21 @@
 import * as Blockly from 'blockly/core';
 import Swal from 'sweetalert2';
 
-const isMobile = () => {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-};
-
 Blockly.dialog.setPrompt((msg, defaultValue, callback) => {
-  if (isMobile()) {
-    callback(prompt(msg, defaultValue));
-    return;
-  }
-  Swal.fire({
-    theme: document.querySelector('[data-bs-theme="light"]') ? 'light' : 'dark',
-    title: msg,
-    input: 'text',
-    inputValue: defaultValue,
-    inputAttributes: {
-      autocapitalize: 'off'
-    },
-    showCancelButton: true,
-    confirmButtonText: 'Confirm',
-    allowOutsideClick: () => !Swal.isLoading()
-  }).then((result) => {
-    if (result.value) {
-      callback(result.value);
-    }
-  });
+  // Blockly bubles events weirdly, setTimeout to prevent imediate close on mobile
+  setTimeout(() => {
+    Swal.fire({
+      theme: document.querySelector('[data-bs-theme="light"]') ? 'light' : 'dark',
+      title: msg,
+      input: 'text',
+      inputValue: defaultValue,
+      inputAttributes: {
+        autocapitalize: 'off'
+      },
+      showCancelButton: true,
+      confirmButtonText: 'Confirm'
+    }).then((result) => {
+      if (result.value) callback(result.value);
+    });
+  }, 0);
 });

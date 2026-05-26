@@ -48,13 +48,13 @@ javascriptGenerator.forBlock[blockName] = (block) => {
     if (Types.MessagePayload.includes(contentType))
       return `interaction.reply({
   files: ${stored},
-  ${hidden?'flags: Discord.MessageFlags.Ephemeral,':''}
+  ${hidden ? 'flags: Discord.MessageFlags.Ephemeral,' : ''}
   ...${msg}
 });`;
   }
   return `interaction.reply({
   files: ${stored},
-  ${hidden?'flags: Discord.MessageFlags.Ephemeral,':''}
+  ${hidden ? 'flags: Discord.MessageFlags.Ephemeral,' : ''}
   content: String(${msg})
 });`;
 };

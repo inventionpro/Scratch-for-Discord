@@ -121,8 +121,7 @@ ${keys !== null ? '<button id="tdb-delete" class="swal2-confirm swal2-styled">De
                       } else {
                         Swal.showValidationMessage(this.$t('token.error'));
                       }
-                    },
-                    allowOutsideClick: () => !Swal.isLoading()
+                    }
                   }).then((result2) => {
                     if (result2.isConfirmed) {
                       let name = result2.value;
@@ -136,8 +135,7 @@ ${keys !== null ? '<button id="tdb-delete" class="swal2-confirm swal2-styled">De
                         showCancelButton: true,
                         confirmButtonText: this.$t('token.save3'),
                         showLoaderOnConfirm: true,
-                        preConfirm: (file2) => file2,
-                        allowOutsideClick: () => !Swal.isLoading()
+                        preConfirm: (file2) => file2
                       }).then(async (result) => {
                         if (result.isConfirmed) {
                           let token = result.value;

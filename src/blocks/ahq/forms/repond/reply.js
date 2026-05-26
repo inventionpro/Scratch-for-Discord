@@ -104,7 +104,7 @@ javascriptGenerator.forBlock[blockName] = (block) => {
   if (Style) code.push(`components: [new Discord.ActionRowBuilder().addComponents(${Style.replace("'", '').replace("'", '').replace('(', '').replace(')', '')})],`);
   let ephemeral = javascriptGenerator.valueToCode(block, 'ephemeral', javascriptGenerator.ORDER_NONE);
   if (ephemeral) code.push('flags: Discord.MessageFlags.Ephemeral');
-  code.push('})')
+  code.push('})');
   return code.join('\n');
 };
 

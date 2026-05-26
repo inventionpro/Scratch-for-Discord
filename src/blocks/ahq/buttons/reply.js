@@ -64,7 +64,7 @@ javascriptGenerator.forBlock[blockName] = (block) => {
   if (embed) extra = embed;
   return `i.reply({
   content: String(${data}),
-  ${eph?'flags: Discord.MessageFlags.Ephemeral,':''}
+  ${eph ? 'flags: Discord.MessageFlags.Ephemeral,' : ''}
   ${ahq.replace('`', '').replace('`', '')}
   ...${extra}
 });`;

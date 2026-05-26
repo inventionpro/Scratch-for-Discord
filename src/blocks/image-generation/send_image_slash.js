@@ -36,6 +36,6 @@ javascriptGenerator.forBlock[blockName] = (block) => {
   const image = javascriptGenerator.valueToCode(block, 'IMAGE', javascriptGenerator.ORDER_ATOMIC);
   return `interaction.reply({
   files: [${image}],
-  ${hidden?'flags: Discord.MessageFlags.Ephemeral':''}
+  ${hidden ? 'flags: Discord.MessageFlags.Ephemeral' : ''}
 });`;
 };

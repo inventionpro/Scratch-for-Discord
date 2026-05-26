@@ -10,7 +10,7 @@
 <script>
 import * as Blockly from 'blockly/core';
 import { javascriptGenerator } from 'blockly/javascript';
-import swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 import { useToast } from 'vue-toast-notification';
 import * as blocklyModule from '../blocks/blocklyModule.js';
 import * as customBlockModule from './NavigationBar/cbmodule.js';
@@ -109,10 +109,6 @@ export default {
     };
   },
   async mounted() {
-    const allow_toolbox_search = false;
-    const isMobile = () => {
-      return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-    };
     this.toast ??= useToast();
     function prepToolbox(toolbox_content, searching, searchparameter = '') {
       const default_max_length = 250;
@@ -226,20 +222,6 @@ ${CATEGORYCONTENT}`
       console.log(blocks);
     }
 
-    if (allow_toolbox_search) {
-      Blockly.ContextMenuRegistry.registry.register({
-        displayText: 'Search for block',
-        preconditionFn: () => 'enabled',
-        callback: () => {
-          let new_toolbox_xml = prepToolbox(toolbox(val), true);
-          workspace.updateToolbox(new_toolbox_xml);
-        },
-        scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
-        id: 'searchblock',
-        weight: 99
-      });
-    }
-
     localforage.getItem('utilitiesShortcuts').then((item) => {
       if (item != false) {
         window.addEventListener('keydown', (evt) => {
@@ -333,6 +315,16 @@ ${CATEGORYCONTENT}`
         weight: 500
       });
       Blockly.ContextMenuRegistry.registry.register({
+        displayText: 'Log all Toolbox blocks',
+        preconditionFn: () => 'enabled',
+        callback: () => {
+          logtoolblocks(true);
+        },
+        scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
+        id: 'logtoolblocks',
+        weight: 550
+      });
+      Blockly.ContextMenuRegistry.registry.register({
         displayText: 'Spawn all toolblocks',
         preconditionFn: () => 'enabled',
         callback: () => {
@@ -397,22 +389,7 @@ ${CATEGORYCONTENT}`
     });
 
     localforage.getItem('hide-blockcount').then((item) => {
-      if (String(item) === 'true') {
-        document.getElementById('block-counter')?.remove();
-      }
-    });
-
-    window.s4dDebugEvents.push(() => {
-      Blockly.ContextMenuRegistry.registry.register({
-        displayText: 'Log all Toolbox blocks',
-        preconditionFn: () => 'enabled',
-        callback: () => {
-          logtoolblocks(true);
-        },
-        scopeType: Blockly.ContextMenuRegistry.ScopeType.WORKSPACE,
-        id: 'logtoolblocks',
-        weight: 500
-      });
+      if (String(item) === 'true') document.getElementById('block-counter')?.remove();
     });
 
     let val = (await localforage.getItem('fav')) === null ? null : await localforage.getItem('fav');
@@ -648,7 +625,7 @@ ${CATEGORYCONTENT}`
       inlineDiv.append(buttonDiv);
     });
     workspace.registerButtonCallback('FFMPEG', () => {
-      swal.fire({
+      Swal.fire({
         theme: document.querySelector('[data-bs-theme="light"]') ? 'light' : 'dark',
         title: 'Hey uhh..',
         icon: 'info',
@@ -660,103 +637,39 @@ ${CATEGORYCONTENT}`
       workspace.updateToolbox(new_toolbox_xml);
     };
     workspace.registerButtonCallback('SEARCH', () => {
-      if (isMobile()) {
-        let res = String(prompt('Search for a block:'));
-        let block = res.replaceAll(' ', '_').replaceAll('<', '_').replaceAll('>', '_').replaceAll('/', '_');
-        let new_toolbox_xml = prepToolbox(toolbox(val), true, block);
-        workspace.toolbox_.clearSelection();
-        workspace.updateToolbox(new_toolbox_xml);
-        workspace.toolbox_.clearSelection();
-        return;
-      }
-      swal
-        .fire({
-          theme: 'auto',
+      // Blockly bubles events weirdly, setTimeout to prevent imediate close on mobile
+      setTimeout(() => {
+        Swal.fire({
+          theme: document.querySelector('[data-bs-theme="light"]') ? 'light' : 'dark',
           title: 'Search for a block',
           html: `<input type="text" id="block">`,
           showCancelButton: true,
           showConfirmButton: true,
           confirmButtonText: 'Search'
-        })
-        .then(async (result) => {
-          if (result) {
-            let block = document.getElementById('block').value.replaceAll(' ', '_').replaceAll('<', '_').replaceAll('>', '_').replaceAll('/', '_');
-            let new_toolbox_xml = prepToolbox(toolbox(val), true, block);
-            workspace.toolbox_.clearSelection();
-            workspace.updateToolbox(new_toolbox_xml);
-            workspace.toolbox_.clearSelection();
-          }
+        }).then(async (result) => {
+          if (!result) return;
+          let block = document.getElementById('block').value.replaceAll(/[ \<\>\/]/g, '_');
+          let new_toolbox_xml = prepToolbox(toolbox(val), true, block);
+          workspace.toolbox_.clearSelection();
+          workspace.updateToolbox(new_toolbox_xml);
+          workspace.toolbox_.clearSelection();
         });
+      }, 0);
     });
-    /*
-        let xml = Blockly.utils.xml.textToDom(`
-<block type="s4d_login">
-    <value name="TOKEN">
-        <shadow type="text">
-            <field name="TEXT">Your bot token</field>
-        </shadow>
-    </value>
-</block>
-`);
-        let block = Blockly.Xml.domToBlock(xml, workspace)
-        block.setDeletable(false)
-*/
-
-    // the best addition to s4d
-
-    /*
-        function corrupt(amount, charArray) {
-            String.prototype.replaceAt = function (index, replacement) {
-                return this.substring(0, index) + String(replacement) + this.substring(index + String(replacement).length);
-            }
-            const elements = document.getElementsByTagName("path")
-            for (let i = 0; i < elements.length; i++) {
-                let current = elements.item(i)
-                let css = current.getAttribute("d")
-                for (let j = 0; j < amount; j++) {
-                    css = String(css).replaceAt(Math.round(Math.random() * String(css).length - 1), charArray[Math.round(Math.random() * charArray.length - 1)])
-                }
-                try {
-                    current.setAttribute("d", css)
-                } catch {
-                    continue
-                }
-            }
-        }
-        window.addEventListener("click", () => {
-            if (Math.round(Math.random() * 10) <= 3) return
-            corrupt(20, ["0","1","2","3","4","5","6","7","8","9"])
-        })
-        */
-
-    // uncomment the code and watch it all unfold
-    // it is great
-    //trust me\
 
     function themeBlocks(strokeColor, fillColor, specialTag) {
       // thanks Onur Yıldırım and Martin Delille for spoonfeed (real)
       function invertColor(hex) {
-        if (hex.indexOf('#') === 0) {
-          hex = hex.slice(1);
-        }
+        if (hex.startsWith('#')) hex = hex.slice(1);
         // convert 3-digit hex to 6-digits.
-        if (hex.length === 3) {
-          hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-        }
-        if (hex.length !== 6) {
-          throw new Error('Invalid HEX color.');
-        }
+        if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        if (hex.length !== 6) throw new Error('Invalid HEX color.');
         // invert color components
-        let r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16),
-          g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16),
-          b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+        let r = 255 - parseInt(hex.slice(0, 2), 16),
+          g = 255 - parseInt(hex.slice(2, 4), 16),
+          b = 255 - parseInt(hex.slice(4, 6), 16);
         // pad each with zeros and return
-        return '#' + padZero(r) + padZero(g) + padZero(b);
-      }
-      function padZero(str, len) {
-        len = len || 2;
-        let zeros = new Array(len).join('0');
-        return (zeros + str).slice(-len);
+        return rgbToHex(r, g, b);
       }
       function hexToRgb(hex) {
         let arrBuff = new ArrayBuffer(4);
@@ -765,11 +678,8 @@ ${CATEGORYCONTENT}`
         let arrByte = new Uint8Array(arrBuff);
         return [arrByte[1], arrByte[2], arrByte[3]];
       }
-      function componentToHex(color) {
-        return color.toString(16).padStart(2, '0');
-      }
       function rgbToHex(r, g, b) {
-        return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
+        return `#${r.toString(16).padStart(2, '0')}${g.toString(16).padStart(2, '0')}${b.toString(16).padStart(2, '0')}`;
       }
       const eventBlockSVGRegex = / m 0,0  m 0,4 a 4 4 0 0,1 4,-4  h [0-9.]* a 4 4 0 0,1 4,4  v 4  V 8  V 40  V 44 a 4 4 0 0,1 -4,4  H 64  c -2,0  -3,1  -4,2  l -4,4  c -1,1  -2,2  -4,2  h -12/gim;
       const outputBlockSVGRegex = / m [0-9]*,0  h [0-9.]* a 20 20 0 0,1 20,20  v 0 a 20 20 0 0,1 -20,20  V 40  h [0-9.-]* a 20 20 0 0,1 -20,-20  v 0 a 20 20 0 0,1 20,-20 z/gim;
@@ -864,36 +774,8 @@ ${CATEGORYCONTENT}`
           newRgb = rgbToHex(r, g, b);
           current.setAttribute('stroke', newRgb);
         } else if (specialTag == 'textless') {
-          let elements = document.getElementsByClassName('blocklyText');
-          for (let i = 0; i < elements.length; i++) {
-            let current = elements.item(i);
-            current.remove();
-          }
-          elements = document.getElementsByClassName('blocklyText blocklyDropdownText');
-          for (let i = 0; i < elements.length; i++) {
-            let current = elements.item(i);
-            current.remove();
-          }
-          elements = document.getElementsByClassName('blocklyMenuItemContent goog-menuitem-content');
-          for (let i = 0; i < elements.length; i++) {
-            let current = elements.item(i);
-            current.remove();
-          }
-          elements = document.getElementsByClassName('blocklyFlyoutLabelText');
-          for (let i = 0; i < elements.length; i++) {
-            let current = elements.item(i);
-            current.remove();
-          }
-          elements = document.getElementsByClassName('blocklyMenuItemContent goog-menuitem-content');
-          for (let i = 0; i < elements.length; i++) {
-            let current = elements.item(i);
-            current.remove();
-          }
-          elements = document.getElementsByClassName('blocklyTreeLabel');
-          for (let i = 0; i < elements.length; i++) {
-            let current = elements.item(i);
-            current.remove();
-          }
+          let elements = document.querySelectorAll('.blocklyText, .blocklyDropdownText, .blocklyMenuItemContent.goog-menuitem-content, .blocklyFlyoutLabelText, .blocklyMenuItemContent.goog-menuitem-content, .blocklyTreeLabel');
+          for (let i = 0; i < elements.length; i++) elements.item(i).remove();
         } else if (specialTag == 'toon') {
           let celements = document.getElementsByClassName('blocklyFieldRect blocklyDropdownRect');
           for (let i = 0; i < celements.length; i++) {
@@ -1052,9 +934,7 @@ ${CATEGORYCONTENT}`
         let type = scope.block.type;
 
         function arrayRemove(arr, value) {
-          return arr.filter(function (ele) {
-            return ele != value;
-          });
+          return arr.filter((ele) => ele != value);
         }
 
         if (val && val.includes(scope.block.type)) {

@@ -893,8 +893,7 @@ ${
                         } else {
                           Swal.showValidationMessage(this.$t('prebuild.error'));
                         }
-                      },
-                      allowOutsideClick: () => !Swal.isLoading()
+                      }
                     }).then(async (result2) => {
                       if (result2.isConfirmed) {
                         let name = result2.value;

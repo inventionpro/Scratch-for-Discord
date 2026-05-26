@@ -35,6 +35,6 @@ javascriptGenerator.forBlock[blockName] = (block) => {
   const reply = javascriptGenerator.valueToCode(block, 'REPLY', javascriptGenerator.ORDER_ATOMIC);
   return `await i.reply({
   content: ${reply},
-  ${tof?'flags: Discord.MessageFlags.Ephemeral':''}
+  ${tof ? 'flags: Discord.MessageFlags.Ephemeral' : ''}
 });`;
 };
