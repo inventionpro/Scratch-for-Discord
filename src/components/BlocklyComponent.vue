@@ -19,6 +19,7 @@ import toolbox from '../toolbox.js';
 
 import { Backpack } from '@blockly/workspace-backpack';
 import { WorkspaceSearch } from '@blockly/plugin-workspace-search';
+import iro from '@jaames/iro';
 import theme from '@blockly/theme-dark';
 import customBlockBuilderTheme from '@blockly/theme-dark';
 import Load from '../backpack-save-load.js';
@@ -961,10 +962,12 @@ ${CATEGORYCONTENT}`
       weight: 100
     });
 
+    // Search
     const workspaceSearch = new WorkspaceSearch(workspace);
     workspaceSearch.init();
     workspaceSearch.close();
 
+    // Backpack
     const backpack = new Backpack(workspace, {
       contextMenu: {
         emptyBackpack: true,
@@ -977,9 +980,47 @@ ${CATEGORYCONTENT}`
     });
     backpack.init();
     Load(backpack, workspace);
-    this.$store.commit('setWorkspace', {
-      workspace
-    });
+
+    // Iro color picker
+    class IroColorField extends Blockly.FieldColour {
+      showEditor_() {
+        const div = Blockly.DropDownDiv.getContentDiv();
+        let boxPicker = new iro.ColorPicker(div, {
+          width: 225,
+          layoutDirection: 'horizontal',
+          color: this.getValue(),
+          borderWidth: 0,
+          layout: [
+            { component: iro.ui.Box },
+            {
+              component: iro.ui.Slider,
+              options: { sliderType: 'hue' }
+            }
+          ]
+        });
+        boxPicker.on('input:change', (color) => {
+          div.querySelector('input').value = color.hexString;
+          this.setValue(color.hexString);
+        });
+        // Iro takes a frame to set
+        setTimeout(()=>{
+          div.insertAdjacentHTML('beforeend', `<input value="${this.getValue()}" class="form-control">`);
+          div.querySelector('input').oninput = (evt)=>{
+            boxPicker.setColors([evt.target.value]);
+            this.setValue(evt.target.value);
+          };
+          Blockly.DropDownDiv.showPositionedByField(this, this.dropdownDispose_.bind(this));
+        }, 0);
+      }
+      dropdownDispose_() {
+        Blockly.DropDownDiv.getContentDiv().innerHTML = '';
+      }
+    }
+    Blockly.fieldRegistry.unregister('field_colour');
+    Blockly.fieldRegistry.register('field_colour', IroColorField);
+
+    // Workspace & Toasts
+    this.$store.commit('setWorkspace', { workspace });
     workspace.addChangeListener(Blockly.Events.disableOrphans);
     this.$nextTick(() => {
       window.setInterval(() => {
