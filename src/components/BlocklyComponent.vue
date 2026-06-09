@@ -1003,9 +1003,9 @@ ${CATEGORYCONTENT}`
           this.setValue(color.hexString);
         });
         // Iro takes a frame to set
-        setTimeout(()=>{
+        setTimeout(() => {
           div.insertAdjacentHTML('beforeend', `<input value="${this.getValue()}" class="form-control">`);
-          div.querySelector('input').oninput = (evt)=>{
+          div.querySelector('input').oninput = (evt) => {
             boxPicker.setColors([evt.target.value]);
             this.setValue(evt.target.value);
           };
