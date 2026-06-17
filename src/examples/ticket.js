@@ -1,65 +1,64 @@
-export default `
-<xml xmlns="https://developers.google.com/blockly/xml">
-  <block type="s4d_login" id="+X4MpZayvtt7cjQdJbn6" x="265" y="100">
+export default `<xml xmlns="https://developers.google.com/blockly/xml">
+  <block type="s4d_login" x="265" y="100">
     <value name="TOKEN">
-      <block type="text" id="=OnTyQ/sYsGK?yVwL(]k">
+      <block type="text">
         <field name="TEXT">Your bot token</field>
       </block>
     </value>
   </block>
-  <block type="ticket_connect" id="tdkd}QaH1$90-h0q\`#[0" x="262" y="190">
+  <block type="ticket_connect" x="262" y="190">
     <value name="URL">
-      <block type="text" id="%{dgTz9Nyo2L=ak6SAf4">
+      <block type="text">
         <field name="TEXT">Mongodb URI here or type local</field>
       </block>
     </value>
   </block>
-  <block type="s4d_on_message" id="bt[F8^;aOE7GU?5$a)?w" x="262" y="266">
+  <block type="s4d_on_message" x="262" y="266">
     <statement name="STATEMENTS">
-      <block type="controls_if" id="y[Zd4^IR3GK!s?44|!~X">
+      <block type="controls_if">
         <comment pinned="false" h="80" w="160">This will set your ticket channel to mentioned channel</comment>
         <value name="IF0">
-          <block type="s4d_starts_with" id="2G5n|2auP|5Yf\`O:d2WQ">
+          <block type="s4d_starts_with">
             <value name="STRING">
-              <shadow type="text" id="%7xut+8PnbWP#Pl%W5b9">
+              <shadow type="text">
                 <field name="TEXT">abc</field>
               </shadow>
-              <block type="s4d_message_content" id="^=WIpv_,R6^HwC3dx|9Q"></block>
+              <block type="s4d_message_content"></block>
             </value>
             <value name="SUBSTRING">
-              <shadow type="text" id="e#!fvp_D+yKP+-rdlh+L">
+              <shadow type="text">
                 <field name="TEXT">!ticket</field>
               </shadow>
             </value>
           </block>
         </value>
         <statement name="DO0">
-          <block type="s4d_try_and_catch" id="0ks@]Hu/j7Api;h46E^q">
+          <block type="s4d_try_and_catch">
             <statement name="try">
-              <block type="ticket_setup" id="1O(xq,Qa9*)5@pU}vLuc">
+              <block type="ticket_setup">
                 <next>
-                  <block type="s4d_reply" id="L:)RsJnX;\`P7*ZAkGi1{">
+                  <block type="s4d_reply">
                     <value name="CONTENT">
-                      <shadow type="text" id="r01@NRfXm{ZMCR$9-*XM">
+                      <shadow type="text">
                         <field name="TEXT"></field>
                       </shadow>
-                      <block type="text_join" id="1FR!af{Nk;$QG_stV]8e">
+                      <block type="text_join">
                         <mutation items="4"></mutation>
                         <value name="ADD0">
-                          <block type="text" id="!Bw+#YB+5v!$A8H(W[_R">
+                          <block type="text">
                             <field name="TEXT">I have set the ticket channel to </field>
                           </block>
                         </value>
                         <value name="ADD1">
-                          <block type="text" id=".nOMw^hI$n5t.0QPy1(L">
+                          <block type="text">
                             <field name="TEXT">&lt;#</field>
                           </block>
                         </value>
                         <value name="ADD2">
-                          <block type="s4d_mentioned_channel" id="-BtOp3iN:?9q_i|Yo9i3"></block>
+                          <block type="s4d_mentioned_channel"></block>
                         </value>
                         <value name="ADD3">
-                          <block type="text" id="Ir4(LeW_6~Gt%xHUuJqZ">
+                          <block type="text">
                             <field name="TEXT">&gt;</field>
                           </block>
                         </value>
@@ -70,9 +69,9 @@ export default `
               </block>
             </statement>
             <statement name="catch">
-              <block type="s4d_reply" id="p-%]v*]\`QLgQ-J}|Pk$K">
+              <block type="s4d_reply">
                 <value name="CONTENT">
-                  <shadow type="text" id="pfZh_Hg]u8rj/i_X.ELo">
+                  <shadow type="text">
                     <field name="TEXT">U need to mention a channel!</field>
                   </shadow>
                 </value>
@@ -81,28 +80,28 @@ export default `
           </block>
         </statement>
         <next>
-          <block type="controls_if" id="?mr%Ub*ms2Yp+]3T+qfd">
+          <block type="controls_if">
             <value name="IF0">
-              <block type="s4d_starts_with" id="ctqsn|fbW-jw#E(IZdVZ">
+              <block type="s4d_starts_with">
                 <value name="STRING">
                   <shadow type="text">
                     <field name="TEXT">abc</field>
                   </shadow>
-                  <block type="s4d_message_content" id="rB_li[eh]u.9tu,VY);{"></block>
+                  <block type="s4d_message_content"></block>
                 </value>
                 <value name="SUBSTRING">
-                  <shadow type="text" id="#4om-]$S|p[mQ3JiK=Ws">
+                  <shadow type="text">
                     <field name="TEXT">!close</field>
                   </shadow>
                 </value>
               </block>
             </value>
             <statement name="DO0">
-              <block type="close_ticket" id="W[~-[a^vvknhCzQys7kb">
+              <block type="close_ticket">
                 <next>
-                  <block type="s4d_reply" id="0]J:hj-UMM\`ZMA;_wY7T">
+                  <block type="s4d_reply">
                     <value name="CONTENT">
-                      <shadow type="text" id="PV3cX()t%o7pjPgqj7So">
+                      <shadow type="text">
                         <field name="TEXT">Closed the ticket</field>
                       </shadow>
                     </value>
@@ -111,60 +110,60 @@ export default `
               </block>
             </statement>
             <next>
-              <block type="controls_if" id="Ofy*%,F*0JFl_:{BI({7">
+              <block type="controls_if">
                 <value name="IF0">
-                  <block type="s4d_starts_with" id="WZgYgk(DYiCxFgNpOW:T">
+                  <block type="s4d_starts_with">
                     <value name="STRING">
                       <shadow type="text">
                         <field name="TEXT">abc</field>
                       </shadow>
-                      <block type="s4d_message_content" id="gp.~ymuL0s(nR1Hx$\`$u"></block>
+                      <block type="s4d_message_content"></block>
                     </value>
                     <value name="SUBSTRING">
-                      <shadow type="text" id="0n$S=n3X=V0X\`sC5,5o\`">
+                      <shadow type="text">
                         <field name="TEXT">!archive</field>
                       </shadow>
                     </value>
                   </block>
                 </value>
                 <statement name="DO0">
-                  <block type="s4d_reply" id="pd:A/9P#A%3)^7{d%pL}">
+                  <block type="s4d_reply">
                     <value name="CONTENT">
-                      <shadow type="text" id=",XjDz-hEJY2MWocvgb.$">
+                      <shadow type="text">
                         <field name="TEXT">Archived the ticket</field>
                       </shadow>
                     </value>
                     <next>
-                      <block type="archieve_ticket" id="m83(3{!K^{9%H,UQLVO5"></block>
+                      <block type="archieve_ticket"></block>
                     </next>
                   </block>
                 </statement>
                 <next>
-                  <block type="controls_if" id="eUSuB)~\`4yb|0(4Wt.hh">
+                  <block type="controls_if">
                     <value name="IF0">
-                      <block type="s4d_starts_with" id=".?xl*AT#1?}+S-{=\`aTL">
+                      <block type="s4d_starts_with">
                         <value name="STRING">
                           <shadow type="text">
                             <field name="TEXT">abc</field>
                           </shadow>
-                          <block type="s4d_message_content" id="]38WQz9SWk%OaB]PIH~S"></block>
+                          <block type="s4d_message_content"></block>
                         </value>
                         <value name="SUBSTRING">
-                          <shadow type="text" id="uG}OnYeHs40OBytm{Axb">
+                          <shadow type="text">
                             <field name="TEXT">!unarchive</field>
                           </shadow>
                         </value>
                       </block>
                     </value>
                     <statement name="DO0">
-                      <block type="s4d_reply" id=",iAE;YZ+n^~tuocAL5Bp">
+                      <block type="s4d_reply">
                         <value name="CONTENT">
-                          <shadow type="text" id=":(18p$StLXkpo$QC~5lS">
+                          <shadow type="text">
                             <field name="TEXT">Unarchived the ticket</field>
                           </shadow>
                         </value>
                         <next>
-                          <block type="unarchieve_ticket" id="2cY6\`W,%Qbc8;KvlJ~gf"></block>
+                          <block type="unarchieve_ticket"></block>
                         </next>
                       </block>
                     </statement>
@@ -177,5 +176,4 @@ export default `
       </block>
     </statement>
   </block>
-</xml>
-`;
+</xml>`;

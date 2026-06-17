@@ -1,5 +1,4 @@
-export default `
-<xml xmlns="https://developers.google.com/blockly/xml">
+export default `<xml xmlns="https://developers.google.com/blockly/xml">
   <block type="s4d_login" x="0" y="0">
     <value name="TOKEN">
       <block type="frost_env">
