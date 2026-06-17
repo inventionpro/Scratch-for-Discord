@@ -10,7 +10,13 @@ const TypeToField = {
   s4d_icon_url: 'ICON_URL',
   set_verification_level: 'NAME',
   explicit_content_filter: 'NAME',
-  default_notif_lvl: 'NAME'
+  default_notif_lvl: 'NAME',
+  s4d_mentioned_member: 'members',
+  s4d_mentioned_channel: 'channels',
+  s4d_mentioned_role: 'roles',
+  reply_mentioned_member: 'members',
+  reply_mentioned_channel: 'channels',
+  reply_mentioned_role: 'roles'
 };
 const UpgradeField = {
   set_verification_level: {
@@ -69,7 +75,7 @@ export default function upgradeXml(xml) {
     let orig = block.getAttribute('type');
     block.setAttribute('type', 's4d_reply');
     block.innerHTML = `<value name="CONTENT">
-  <shadow type="text" id="Ro]KG~-!g0GQ51#Y/6z+">
+  <shadow type="text">
     <field name="TEXT">${TypeToField[orig]}</field>
   </shadow>
 </value>`;
@@ -131,6 +137,23 @@ export default function upgradeXml(xml) {
       'beforeend',
       `<value name="CHANNEL">
   <block type="s4d_message_channel"></block>
+</value>`
+    );
+  });
+  // Flexible mentioned
+  xml.querySelectorAll('block[type="s4d_mentioned_member"],block[type="s4d_mentioned_channel"],block[type="s4d_mentioned_role"],block[type="reply_mentioned_member"],block[type="reply_mentioned_channel"],block[type="reply_mentioned_role"]').forEach((block) => {
+    let orig = block.getAttribute('type');
+    block.setAttribute('type', 'jg_message_mentioned_member_number_on_message');
+    block.insertAdjacentHTML(
+      'beforeend',
+      `<field name="TYPE">${TypeToField[orig]}</field>
+<value name="INDEX">
+  <shadow type="math_number">
+    <field name="NUM">1</field>
+  </shadow>
+</value>
+<value name="MESSAGE">
+  <shadow type="${orig.startsWith('reply_')?'reply_m':'M'}essage"/>
 </value>`
     );
   });

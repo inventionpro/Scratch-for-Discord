@@ -326,17 +326,34 @@ Blockly.Blocks['jg_message_mentioned_member_number_on_message'] = {
           type: 'field_dropdown',
           name: 'TYPE',
           options: [
-            ['member', 'users'],
+            ['member', 'members'],
+            ['users', 'users'],
             ['role', 'roles'],
             ['channel', 'channels']
           ]
         }
       ],
       colour: '#187795',
-      output: T(Types.Member, Types.Role, Types.Channel),
+      output: T(Types.Member, Types.User, Types.Role, Types.Channel),
       tooltip: 'Get a specific mentioned member, role or channel on the message.',
       helpUrl: ''
     });
+  },
+  onchange: function () {
+    switch (this.getFieldValue('TYPE')) {
+      case 'members':
+        this.setOutput(true, Types.Member);
+        break;
+      case 'users':
+        this.setOutput(true, Types.User);
+        break;
+      case 'roles':
+        this.setOutput(true, Types.Role);
+        break;
+      case 'channels':
+        this.setOutput(true, Types.Channel);
+        break;
+    }
   }
 };
 
@@ -362,9 +379,10 @@ Blockly.Blocks['jg_message_amount_of_mentioned_members_on_message'] = {
           type: 'field_dropdown',
           name: 'TYPE',
           options: [
-            ['members', 'users'],
-            ['roles', 'roles'],
-            ['channels', 'channels']
+            ['member', 'members'],
+            ['users', 'users'],
+            ['role', 'roles'],
+            ['channel', 'channels']
           ]
         }
       ],

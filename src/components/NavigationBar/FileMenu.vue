@@ -68,7 +68,7 @@ function fetchCustomBlocks(dataobj, loadfunc) {
       dismissible: true,
       duration: 10000
     });
-    console.warn('An error occurred when loading custom blocks!', String(err).substring(0, 250));
+    console.warn('An error occurred when loading custom blocks!', err);
     if (loadfunc) loadfunc();
     return;
   }
@@ -102,7 +102,7 @@ function fetchCustomBlocks(dataobj, loadfunc) {
       };
       smm.bypassStrictModeRegister(block.name, block.javascript);
     } catch (err) {
-      console.warn('An error occurred when loading a custom block!', String(err).substring(0, 250));
+      console.warn('An error occurred when loading a custom block!', err);
       works = false;
     } finally {
       if (works) {
@@ -225,7 +225,7 @@ export default {
                 dismissible: true,
                 duration: 10000
               });
-              console.warn('An error occurred when loading a file!', String(err).substring(0, 250));
+              console.warn('An error occurred when loading a file!', err);
             });
         };
         if (file) {

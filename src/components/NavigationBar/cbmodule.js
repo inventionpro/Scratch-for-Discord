@@ -36,7 +36,7 @@ export function createCustomBlock(name, data) {
     };
     bypassStrictModeRegister(name, data.javascript);
   } catch (err) {
-    console.warn('An error occurred when loading a custom block!', String(err).substring(0, 250));
+    console.warn('An error occurred when loading a custom block!', err);
     works = false;
   } finally {
     if (works) {

@@ -887,9 +887,6 @@ export default (favorites) => {
     <block type="s4d_message_ts"/>
     <block type="s4d_message_author"/>
     <block type="s4d_message_member"/>
-    <block type="s4d_mentioned_member"/>
-    <block type="s4d_mentioned_channel"/>
-    <block type="s4d_mentioned_role"/>
     <block type="lime_msg_author_attributes"/>
     <label text="Attributes of the message"/>
     <block type="jg_message_mentioned_member_number_on_message">
@@ -1384,7 +1381,9 @@ export default (favorites) => {
     <block type="s4d_embed_set_author">
       <value name="AUTHOR">
         <block type="s4d_member_username">
-          <field name="s4d_member_username"/>
+          <value name="MEMBER">
+            <block type="s4d_message_member"/>
+          </value>
         </block>
       </value>
     </block>
@@ -1902,9 +1901,6 @@ export default (favorites) => {
       </value>
     </block>
     <block type="s4d_send_wait_reply_value"/>
-    <block type="reply_mentioned_member"/>
-    <block type="reply_mentioned_role"/>
-    <block type="reply_mentioned_channel"/>
     <block type="reply_message"/>
     <block type="reply_message_id"/>
     <block type="jg_channels_wait_for_message_in_channel_to_meet_check_for_minutes_then_if_no_messages_pass">

@@ -1,6 +1,5 @@
 import './add_reaction';
 import './delete_message';
-import './mentioned_member';
 import './message_id';
 import './message_author';
 import './message_author_raw';
@@ -17,8 +16,6 @@ import './send_reply_then_edit';
 import './send_reply_then_delete';
 import './send_reply_then_add_reaction';
 import './send_reply_then_reply_id';
-import './mentioned_channel';
-import './mentioned_role';
 import './message_embed';
 import './get_message_by_id_then';
 import './message_member';
