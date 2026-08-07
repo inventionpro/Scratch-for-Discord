@@ -153,7 +153,7 @@ export default function upgradeXml(xml) {
   </shadow>
 </value>
 <value name="MESSAGE">
-  <shadow type="${orig.startsWith('reply_')?'reply_m':'M'}essage"/>
+  <shadow type="${orig.startsWith('reply_') ? 'reply_m' : 'M'}essage"/>
 </value>`
     );
   });
