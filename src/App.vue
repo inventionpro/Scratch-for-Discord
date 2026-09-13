@@ -20,48 +20,7 @@ import './prompt';
 
 // Load blocks
 // load the entire folder mf
-import './blocks/';
-
-// anyways heres some other manual loading because im not gonna add all of these to blocks's index.js file
-
-import './blocks/discord/base/';
-import './blocks/discord/message-event/';
-import './blocks/discord/reaction-event/';
-import './blocks/discord/bot-event';
-
-import './blocks/discord/channels/';
-import './blocks/discord/servers/';
-import './blocks/discord/roles/';
-import './blocks/discord/members/';
-import './blocks/discord/deleted/';
-import './blocks/discord/discord-button/';
-import './blocks/discord/webhook/';
-import './blocks/discord/embed/';
-import './blocks/discord/discord-menu/';
-import './blocks/discord/music/';
-import './blocks/discord/discord-canvas/welcome/';
-import './blocks/discord/discord-canvas/goodbye/';
-import './blocks/discord/discord-canvas/rankcard/';
-import './blocks/discord/discord-backup/';
-import './blocks/discord/discord-giveaway/';
-import './blocks/youtube-notifier/';
-import './blocks/image-generation/';
-import './blocks/discord-image/';
-import './blocks/invite-tracker/';
-import './blocks/cooldown/';
-import './blocks/together/';
-import './blocks/discord/attachment/';
-import './blocks/discord/bot-event-2/';
-import './blocks/date/';
-import './blocks/regex/';
-import './blocks/list/';
-import './blocks/firebase/';
-import './blocks/discord/voice-channel/';
-import './blocks/progess-bar/';
-import './blocks/captcha/';
-import './blocks/pagination/';
-import './blocks/discord/thread-event';
-import './blocks/godslayerakp';
+import './blocks';
 
 //my events
 //channel
@@ -81,22 +40,6 @@ import './blocks/logs-events/guild/vanity_url_remove/';
 import './blocks/logs-events/guild/vanity_url_update/';
 //finish of my events
 
-import './blocks/discord/mmenu/';
-import './blocks/discord/mbuttons/';
-import './blocks/discord/membed/';
-import './blocks/discord/m-register-menus/';
-import './blocks/discord/mslash/';
-import './blocks/discord/wmise/';
-import './blocks/mongodb/';
-
-// orang
-import './blocks/LaserCat/switch';
-
-import './blocks/jsonrequest';
-import './blocks/database/';
-import './blocks/text/';
-import './blocks/loops/';
-import './blocks/other/';
 //events
 //channel
 import './blocks/events/channel/channelCreate/';
@@ -120,58 +63,6 @@ import './blocks/events/role/roleDelete/';
 import './blocks/events/sticker/stickerCreate/';
 import './blocks/events/sticker/stickerUpdate/';
 import './blocks/events/sticker/stickerDelete/';
-//469 stuff
-import './blocks/games/';
-import './blocks/reddit/';
-import './blocks/p-s_stats/';
-import './blocks/ticket_system/';
-import './blocks/Alex/';
-import './blocks/Lyric_finder/';
-import './blocks/frostzzone/useless/';
-import './blocks/frostzzone/useful/';
-import './blocks/frostzzone/scratch/';
-import './blocks/frostzzone/github/';
-//invention
-import './blocks/invention';
-import './blocks/invention/index.js';
-
-import './blocks/better_music/';
-import './blocks/weky/';
-import './blocks/temp_channels';
-import './blocks/qr-generator';
-//jeremy gaming coolness
-import './blocks/JeremyGamer13/';
-import './blocks/JeremyGamer13/jimpBlocks';
-import './blocks/JeremyGamer13/fileEdit';
-
-// Farf things
-import './blocks/charts/';
-import './blocks/tictactoe/';
-import './blocks/dashboard';
-
-// afgrh4t5h5453j
-import './blocks/example-t/';
-
-import './blocks/discord/scheduled-events/scheduled-events';
-import './blocks/Lime/Embed';
-import './blocks/Lime/Events';
-
-//ahq stuff
-import './blocks/ahq/';
-import './blocks/henpokpok/'; // wait a minute
-
-//Eruption
-import './blocks/Eruption/message_embed/';
-
-// Parham
-import './blocks/Parham';
-
-// Monaco
-import './blocks/Monaco';
-// OpenAI
-import './blocks/emidblol/openai/index.js';
-
-import './blocks/quickdb';
 
 export default {
   name: 'App',

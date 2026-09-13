@@ -1,6 +1,6 @@
 import * as Blockly from 'blockly/core';
 import { javascriptGenerator } from 'blockly/javascript';
-import { Types } from '../../../types.js';
+import { Types } from '../../types.js';
 
 const blockName = 'create_new_event';
 const blockData = {

@@ -1,0 +1,32 @@
+import './attachment';
+import './base';
+import './bot-event';
+import './bot-event-2';
+import './channels';
+import './deleted';
+import './discord-backup';
+import './discord-button';
+
+import './discord-canvas/welcome';
+import './discord-canvas/goodbye';
+import './discord-canvas/rankcard';
+
+import './discord-giveaway';
+import './discord-menu';
+import './embed';
+import './m-register-menus';
+import './mbuttons';
+import './membed';
+import './members';
+import './message-event';
+import './mmenu';
+import './mslash';
+import './music';
+import './reaction-event';
+import './roles';
+import './scheduled-events';
+import './servers';
+import './thread-event';
+import './voice-channel';
+import './webhook';
+import './wmise';

@@ -34,3 +34,5 @@ import './sendImageFinal';
 import './ffmpeg';
 import './themeBlocks';
 import './mutatorBlocks';
+import './jimpBlocks';
+import './fileEdit';
