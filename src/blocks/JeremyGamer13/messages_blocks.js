@@ -3263,7 +3263,7 @@ Blockly.Blocks['jg_express_website_set_content_type_to'] = {
           type: 'field_dropdown',
           name: 'TYPE',
           options: [
-            ['application/javascriptGenerator', 'application/javascriptGenerator'],
+            ['application/javascript', 'application/javascript'],
             ['application/ogg', 'application/ogg'],
             ['application/pdf', 'application/pdf'],
             ['application/json', 'application/json'],
