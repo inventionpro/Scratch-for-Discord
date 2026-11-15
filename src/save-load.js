@@ -1,6 +1,8 @@
 import * as Blockly from 'blockly/core';
 import localforage from 'localforage';
 import Swal from 'sweetalert2';
+import { useToast } from 'vue-toast-notification';
+import { disableUnapplicable } from './restrictions.js';
 import upgradeXml from './upgradexml.js';
 
 // Hardcoded backpack events since no enum in Blockly.Events
@@ -15,17 +17,67 @@ function debounce(func, delay) {
 }
 
 let BlockCounter;
-async function handle(workspace) {
+let toast = useToast();
+let loginToast;
+let dbToast;
+let registerToast;
+async function handle(workspace, t) {
   console.log('saved changes...');
   const content = Blockly.Xml.domToPrettyText(Blockly.Xml.workspaceToDom(workspace));
   await localforage.setItem('save3', content);
   await localforage.setItem('autosaveName', document.querySelector('#docName').textContent);
   await localforage.setItem('autosave_customBlocks', JSON.stringify(window.saveCustomBlocksOutput));
 
-  localforage.getItem('hide-blockcount').then((item) => {
+  localforage.getItem('hide-warnings').then((item) => {
     if (String(item) === 'true') return;
+    let allBlocks = workspace.getAllBlocks(false);
+    // Restrictions
+    disableUnapplicable(allBlocks);
+    let loginBlock = false;
+    let dbCreate = false;
+    let dbBlock = false;
+    let registerBlockCount = 0;
+    allBlocks.forEach((block) => {
+      if (loginBlock && dbCreate && dbBlock && registerBlockCount >= 2) return;
+      if (block.type === 's4d_login') loginBlock = true;
+      if (block.type === 's4d_database_create_new') dbCreate = true;
+      if (['s4d_add_data_new', 's4d_delete_all_data_new', 's4d_delete_data_new', 's4d_get_all_data_new', 's4d_get_data_new', 's4d_has_data_new', 's4d_set_data_new', 's4d_subtract_data_new'].includes(block.type)) dbBlock = true;
+      if (block.type === 'frost_slash_register') registerBlockCount++;
+    });
+    if (loginBlock) {
+      if (loginToast) loginToast.dismiss();
+    } else {
+      loginToast ??= toast.open({
+        message: t('warnings.login_block'),
+        type: 'warning',
+        dismissible: false,
+        duration: 1000000000
+      });
+    }
+    if (dbCreate || (!dbCreate && !dbBlock)) {
+      if (dbToast) dbToast.dismiss();
+    } else {
+      dbToast ??= toast.open({
+        message: 'The "Create a new database" block in the "Database" category is required.',
+        type: 'error',
+        dismissible: false,
+        duration: 1000000000
+      });
+    }
+    if (registerBlockCount < 2) {
+      if (registerToast) registerToast.dismiss();
+    } else {
+      registerToast ??= toast.open({
+        message: 'You may only use one "Create Slash Commands" block.',
+        type: 'error',
+        dismissible: false,
+        duration: 1000000000
+      });
+    }
+
+    // Counter
     BlockCounter ??= document.getElementById('block-counter');
-    let blocks = workspace.getAllBlocks(false).length;
+    let blocks = allBlocks.length;
     let rgb = '182, 182, 182';
     let bold = ['', ''];
     if (blocks >= 300 && blocks < 750) {
@@ -96,7 +148,7 @@ export default async function register(app, t) {
     const debouncedHandle = debounce(handle, 100);
     workspace.addChangeListener((event) => {
       if (DISABLED_EVENTS.includes(event.type)) return;
-      debouncedHandle(workspace);
+      debouncedHandle(workspace, t);
     });
   }, 1000);
 }

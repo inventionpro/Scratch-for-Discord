@@ -25,15 +25,12 @@ const customMessages = {
   RES_MUST_BE_IN_KICK_EVENT: 'Must be inside the "When a member is kicked/removed" event!',
   RES_MUST_BE_IN_EVENT_EVENT: 'Must be inside the Scheduled events event block!'
 };
-export const disableUnapplicable = (workspace) => {
-  // Gets all blocks in the workspace
-  const blocks = workspace.getAllBlocks(false);
-
+export const disableUnapplicable = (blocks) => {
   // For each block of the workspace
   for (let block of blocks) {
     // Checks
     if (!block) continue;
-    if (!restrictions[block.type]) restrictions[block.type] = [];
+    if (!restrictions[block.type]) continue;
 
     const messages = [];
     let issues = 0;

@@ -11,10 +11,8 @@
 import * as Blockly from 'blockly/core';
 import { javascriptGenerator } from 'blockly/javascript';
 import Swal from 'sweetalert2';
-import { useToast } from 'vue-toast-notification';
 import * as blocklyModule from '../blocks/blocklyModule.js';
 import * as customBlockModule from './NavigationBar/cbmodule.js';
-import { disableUnapplicable } from '../restrictions.js';
 import toolbox from '../toolbox.js';
 
 import { Backpack } from '@blockly/workspace-backpack';
@@ -110,7 +108,6 @@ export default {
     };
   },
   async mounted() {
-    this.toast ??= useToast();
     function prepToolbox(toolbox_content, searching, searchparameter = '') {
       const default_max_length = 250;
       let CATEGORYCONTENT = `<label text="Error failed to get block(s)..." web-class="boldtext"></label>`;
@@ -389,7 +386,7 @@ ${CATEGORYCONTENT}`
       });
     });
 
-    localforage.getItem('hide-blockcount').then((item) => {
+    localforage.getItem('hide-warnings').then((item) => {
       if (String(item) === 'true') document.getElementById('block-counter')?.remove();
     });
 
@@ -1022,71 +1019,6 @@ ${CATEGORYCONTENT}`
     // Workspace & Toasts
     this.$store.commit('setWorkspace', { workspace });
     workspace.addChangeListener(Blockly.Events.disableOrphans);
-    this.$nextTick(() => {
-      window.setInterval(() => {
-        disableUnapplicable(this.$store.state.workspace);
-        const getAllBlocksInWorkspace = this.$store.state.workspace.getAllBlocks(false);
-        const loginBlock = getAllBlocksInWorkspace.some((block) => block.type === 's4d_login');
-        const db1 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_add_data_new');
-        const db2 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_database_create_new');
-        const db3 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_delete_all_data_new');
-        const db4 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_delete_data_new');
-        const db5 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_get_all_data_new');
-        const db6 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_get_data_new');
-        const db7 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_has_data_new');
-        const db8 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_set_data_new');
-        const db9 = getAllBlocksInWorkspace.some((block) => block.type == 's4d_subtract_data_new');
-        let registerBlockCount = 0;
-        getAllBlocksInWorkspace.some((block) => {
-          if (block.type === 'frost_slash_register') registerBlockCount++;
-        });
-        if (!loginBlock) {
-          if (!this.toastLogin) {
-            this.toastLogin = true;
-            this.toast.open({
-              message: this.$t('warnings.login_block'),
-              type: 'warning',
-              dismissible: false,
-              duration: 1000000000
-            });
-          }
-        } else if (db1 || db3 || db4 || db5 || db6 || db7 || db8 || db9) {
-          if (!db2) {
-            if (!this.toastDB) {
-              this.toastDB = true;
-              this.toast.open({
-                message: 'The "Create a new database" block in the "Database" category is required.',
-                type: 'error',
-                dismissible: false,
-                duration: 1000000000
-              });
-            }
-          } else {
-            this.toastDB = false;
-            this.toast.clear();
-          }
-        } else if (registerBlockCount > 1) {
-          if (!this.toastRegister) {
-            this.toastRegister = true;
-            this.toast.open({
-              message: 'You may only use one "Create Slash Commands" block.',
-              type: 'error',
-              dismissible: false,
-              duration: 1000000000
-            });
-          }
-        } else if (this.toastLogin) {
-          this.toastLogin = false;
-          this.toast.clear();
-        } else if (this.toastRegister) {
-          this.toastRegister = false;
-          this.toast.clear();
-        } else {
-          this.toastDB = false;
-          this.toast.clear();
-        }
-      }, 100);
-    });
   }
 };
 </script>

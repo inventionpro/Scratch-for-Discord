@@ -931,22 +931,16 @@ ${
                   Swal.fire({
                     theme: document.querySelector('[data-bs-theme="light"]') ? 'light' : 'dark',
                     title: 'Site Optimizations',
-                    html: `<span>These optimizations are minor, but can help for big projects.</span><br><b>These require a refresh to fully work.</b>`,
+                    html: `<span>These optimizations are minor, but can help for big projects.</span><br>
+<span>Warnings - Disables block counter, block warnings, and toast warnings</span><br>
+<b>These require a refresh to fully work.</b>`,
                     showCancelButton: true,
                     cancelButtonText: 'Cancel',
-                    confirmButtonText: 'Toggle Block Counter'
+                    confirmButtonText: 'Toggle Warnings'
                   }).then(async (result) => {
                     if (result.isConfirmed) {
-                      localforage.getItem('hide-blockcount').then((item) => {
-                        if (item == null) {
-                          localforage.setItem('hide-blockcount', true);
-                          return;
-                        }
-                        if (String(item) == 'true') {
-                          localforage.setItem('hide-blockcount', false);
-                        } else {
-                          localforage.setItem('hide-blockcount', true);
-                        }
+                      localforage.getItem('hide-warnings').then((item) => {
+                        localforage.setItem('hide-warnings', String(item) !== 'true');
                       });
                     }
                   });
