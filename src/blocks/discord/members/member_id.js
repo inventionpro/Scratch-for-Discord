@@ -10,7 +10,7 @@ const blockData = {
     {
       type: 'input_value',
       name: 'MEMBER',
-      check: Types.Member
+      check: Types.UserResolve
     }
   ],
   colour: '#50a6c9',

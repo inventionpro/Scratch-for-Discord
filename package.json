@@ -23,9 +23,9 @@
     "@popperjs/core": "^2.11.8",
     "@webcontainer/api": "^1.6.4",
     "blockly": "^10.4.3",
-    "bootstrap": "^5.3.8",
+    "bootstrap": "^5.3.9",
     "bootstrap-icons": "^1.13.2",
-    "bootstrap-vue-next": "^1.2.3",
+    "bootstrap-vue-next": "^1.2.4",
     "js-beautify": "^2.0.3",
     "jszip": "^3.10.2",
     "localforage": "^1.10.0",
@@ -36,13 +36,13 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.10",
+    "@vitejs/plugin-vue": "^6.0.11",
     "autoprefixer": "^10.6.2",
-    "eslint": "^10.14.0",
-    "eslint-plugin-vue": "^10.12.0",
-    "postcss": "^8.5.32",
-    "sass": "^1.108.1",
-    "vite": "^8.3.6",
+    "eslint": "^10.15.0",
+    "eslint-plugin-vue": "^10.12.1",
+    "postcss": "^8.5.33",
+    "sass": "^1.108.2",
+    "vite": "^8.3.8",
     "vue-eslint-parser": "^10.4.2"
   },
   "browserslist": [
