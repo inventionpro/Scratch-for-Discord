@@ -51,28 +51,25 @@ const i18n = createI18n({
 });
 
 import toolbox from './toolbox';
-
-//import {Backpack} from '@blockly/workspace-backpack';
-import Theme from '@blockly/theme-dark';
+import theme from '@blockly/theme-dark';
 app.mixin({
   methods: {
     async reloadWorkspace() {
       let val = (await localforage.getItem('fav')) === null ? null : await localforage.getItem('fav');
-      // Get current workspace
       let workspace = this.$store.state.workspace;
-      // Convert it to a dom string
       const dom = Blockly.Xml.workspaceToDom(workspace);
-      // Delete the current workspace
       workspace.dispose();
+      theme.setFontStyle({ family: 'sans-serif' });
       // Create a new workspace (with the good language)
       const newWorkspace = Blockly.inject(document.getElementById('blocklyDiv'), {
+        media: 'https://raw.githubusercontent.com/RaspberryPiFoundation/blockly/ba329e40e71ad2b37220b8441d18a6e6a9b87e72/media/', // TODO: Remove once blockly updated to 13
         grid: {
           spacing: 25,
           length: 3,
           colour: '#ccc'
         },
         renderer: 'zelos',
-        theme: Theme,
+        theme,
         zoom: {
           controls: true,
           startScale: 0.9,
@@ -125,9 +122,7 @@ app.mixin({
   const { exec } = require('node:child_process');
   const logs = require('discord-logs');
   const Discord = require('discord.js');
-  const {
-    Permissions
-  } = require('discord.js')
+  const { Permissions } = require('discord.js');
   const fs = require('node:fs');
   let process = require('node:process');
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -135,7 +130,7 @@ app.mixin({
   // Block imports
   ${requires.join('\n  ')}
 
-  // Define s4d components (pretty sure 90% of these arnt even used/required)
+  // Define s4d components (pretty sure 90% of these aren't even used/required)
   let s4d = {
     fire: null,
     joiningMember: null,
@@ -148,13 +143,13 @@ app.mixin({
   };
 
   // Check if d.js is v14
-  if (!require('./package.json').dependencies['discord.js'].startsWith("^14.")) {
+  if (!require('./package.json').dependencies['discord.js'].startsWith('^14.')) {
     exec('npm i discord.js@^14');
     throw new Error('Seems you arent using v14 please re-run or run \`npm i discord.js@^14\`');
   }
 
   // check if discord-logs is v2
-  if (!require('./package.json').dependencies['discord-logs'].startsWith("^2.")) {
+  if (!require('./package.json').dependencies['discord-logs'].startsWith('^2.')) {
     exec('npm i discord-logs@^2');
     throw new Error('discord-logs needs to be 2.2.0 or higher. please re-run or if that fails run \`npm i discord-logs@^2\` then re-run');
   }

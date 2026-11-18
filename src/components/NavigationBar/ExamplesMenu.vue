@@ -158,7 +158,9 @@ function displaySwalPopupForUserExample(json, selectedOption, SERVER, toast) {
     copyToClipboardButton.innerHTML = `<i class="fa-solid fa-clipboard-check"></i> &#8226 Copied to clipboard!`;
   };
   const userExamplesPreviewMenu = document.getElementById('swal_popup_BlocklyUserExampleViewer');
+  theme.setFontStyle({ family: 'sans-serif' });
   previewWorkspace = Blockly.inject(userExamplesPreviewMenu, {
+    media: 'https://raw.githubusercontent.com/RaspberryPiFoundation/blockly/ba329e40e71ad2b37220b8441d18a6e6a9b87e72/media/', // TODO: Remove once blockly updated to 13
     readOnly: true,
     grid: {
       spacing: 25,
@@ -673,7 +675,6 @@ input[type='radio']:checked {
 }
 
 #swal_popup_BlocklyUserExampleViewer {
-  font-family: sans-serif;
   height: 50dvh;
   width: 97.5%;
   min-width: 40dvw;

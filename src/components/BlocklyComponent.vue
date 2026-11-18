@@ -1,7 +1,7 @@
 <template>
   <div>
     <div id="blocklyDiv" ref="blocklyDiv" class="blocklyDiv" />
-    <xml ref="blocklyToolbox" style="font-family: sans-serif">
+    <xml ref="blocklyToolbox">
       <slot />
     </xml>
   </div>
@@ -477,9 +477,11 @@ ${CATEGORYCONTENT}`
     this.setLanguage(this.$store.state.blocklyLocale);
     const options = this.$props.options || {};
     options.toolbox = this.$refs['blocklyToolbox'];
+    theme.setFontStyle({ family: 'sans-serif' });
     const workspace = Blockly.inject(this.$refs['blocklyDiv'], {
       ...options,
       ...{
+        media: 'https://raw.githubusercontent.com/RaspberryPiFoundation/blockly/ba329e40e71ad2b37220b8441d18a6e6a9b87e72/media/', // TODO: Remove once blockly updated to 13
         renderer: window.renderer ?? 'zelos',
         grid: {
           spacing: 25,
@@ -528,6 +530,7 @@ ${CATEGORYCONTENT}`
         family: 'monospace'
       });
       const customBlockWorkspace = Blockly.inject(blocklyDiv, {
+        media: 'https://raw.githubusercontent.com/RaspberryPiFoundation/blockly/ba329e40e71ad2b37220b8441d18a6e6a9b87e72/media/', // TODO: Remove once blockly updated to 13
         renderer: window.renderer ?? 'zelos',
         grid: {
           spacing: 25,
@@ -1052,11 +1055,6 @@ ${CATEGORYCONTENT}`
 .rss.opacity {
   filter: opacity(50%);
 }
-.blocklyText,
-.blocklyHtmlInput,
-.blocklyTreeLabel {
-  font-family: sans-serif !important;
-}
 
 .zelos-renderer.dark-theme .blocklyHtmlInput {
   background-color: #fff;
@@ -1068,17 +1066,12 @@ ${CATEGORYCONTENT}`
 #blocklyTreeIconClosed {
   filter: invert(100%) sepia(0%) saturate(2950%) hue-rotate(348deg) brightness(118%) contrast(96%) !important;
 }
-body {
-  font-family: sans-serif;
-}
 .blocklyDiv {
-  font-family: sans-serif;
   height: 100%;
   width: 100%;
   text-align: left;
 }
 .blocklyToolboxCategory {
-  font-family: sans-serif;
   color: rgb(204, 204, 204);
 }
 .blocklyToolboxCategory .blocklyToolboxContents {
